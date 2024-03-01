@@ -23,15 +23,18 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            isDebuggable=false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            resValue("string","lejoname","HoroscoApp")
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
         getByName("debug"){
+            isDebuggable=true
+            resValue("string","lejoname","[DEBUG]HoroscoApp")
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
-
         }
     }
 
