@@ -1,8 +1,8 @@
 package com.alejo.horoscopoapp.ui.detail
 
 sealed class HoroscopeDetailState {
-    data object Loading: HoroscopeDetailState() //estado sin parametros. un data object
-    data class Error(val error: String): HoroscopeDetailState() //necesita parametro. data class
-    data class Success(val data:String):HoroscopeDetailState()
+    data object Loading: HoroscopeDetailState()
+    data class Error(val error: String): HoroscopeDetailState()
+    data class Success(val prediction: String, val sign: String):HoroscopeDetailState()
 }
 
