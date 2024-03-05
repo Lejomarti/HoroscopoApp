@@ -1,6 +1,7 @@
 package com.alejo.horoscopoapp.ui.luck
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +17,10 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.alejo.horoscopoapp.R
 import com.alejo.horoscopoapp.databinding.FragmentLuckBinding
+import com.alejo.horoscopoapp.ui.providers.RandomCardProvider
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.wait
+import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -26,13 +29,38 @@ class LuckFragment : Fragment() {
     private var _binding: FragmentLuckBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var randomCardProvider: RandomCardProvider
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
     }
 
     private fun initUI() {
+        preparePrediction()
         initListeners()
+    }
+
+    private fun preparePrediction() {
+        val currentLuck = randomCardProvider.getLucky()
+        currentLuck?.let{luck ->
+            val currentPrediction = getString(luck.text)
+            binding.tvLucky.text = currentPrediction
+            binding.ivLuckyCard.setImageResource(luck.image)
+            binding.tvShare.setOnClickListener {shareResult(currentPrediction)}
+        }
+    }
+
+    private fun shareResult(prediction : String) {
+        val sendIntent: Intent = Intent().apply{
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT,prediction)
+            type= "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun initListeners() {
