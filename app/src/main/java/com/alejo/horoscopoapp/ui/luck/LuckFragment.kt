@@ -1,27 +1,25 @@
 package com.alejo.horoscopoapp.ui.luck
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import androidx.core.animation.doOnEnd
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.alejo.horoscopoapp.R
 import com.alejo.horoscopoapp.databinding.FragmentLuckBinding
+import com.alejo.horoscopoapp.ui.core.listeners.OnSwipeTouchListener
 import com.alejo.horoscopoapp.ui.providers.RandomCardProvider
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.internal.wait
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class LuckFragment : Fragment() {
@@ -63,8 +61,19 @@ class LuckFragment : Fragment() {
         startActivity(shareIntent)
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
-        binding.ivRoulette.setOnClickListener { spinRoulette() }
+//        binding.ivRoulette.setOnClickListener { spinRoulette() }
+        binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()){
+            override fun onSwipeLeft() {
+                spinRoulette()
+            }
+
+            override fun onSwipeRight() {
+                spinRoulette()
+            }
+        })
     }
 
     private fun spinRoulette() {
