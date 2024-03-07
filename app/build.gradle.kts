@@ -23,17 +23,17 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            isDebuggable=false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue("string","lejoname","HoroscoApp")
+            resValue("string", "lejoname", "HoroscoApp")
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
-        getByName("debug"){
-            isDebuggable=true
-            resValue("string","lejoname","[DEBUG]HoroscoApp")
+        getByName("debug") {
+            isDebuggable = true
+            resValue("string", "lejoname", "[DEBUG]HoroscoApp")
             buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
     }
@@ -46,7 +46,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         buildConfig = true
     }
@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    testImplementation("junit:junit:4.12")
     val navVersion = "2.7.1"
     val cameraxVersion = "1.2.3"
 
@@ -66,24 +67,31 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.48")
 
     //Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.3.1")
 
     //Camera X
-    implementation ("androidx.camera:camera-core:${cameraxVersion}")
-    implementation ("androidx.camera:camera-camera2:${cameraxVersion}")
-    implementation ("androidx.camera:camera-lifecycle:${cameraxVersion}")
+    implementation("androidx.camera:camera-core:${cameraxVersion}")
+    implementation("androidx.camera:camera-camera2:${cameraxVersion}")
+    implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
 //    implementation ("androidx.camera:camera-video:${cameraxVersion}")
-    implementation ("androidx.camera:camera-view:${cameraxVersion}")
-    implementation ("androidx.camera:camera-extensions:${cameraxVersion}")
+    implementation("androidx.camera:camera-view:${cameraxVersion}")
+    implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    //UnitTesting
     testImplementation("junit:junit:4.13.2")
+    testImplementation ("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation ("io.mockk:mockk:1.12.3")
+
+
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
